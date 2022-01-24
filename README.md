@@ -12,5 +12,7 @@ If you have a brand new machine, this script will install pip and setup ansible 
 I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/main/install.sh) in your browser before executing.
 
 ```bash
+mkdir ~/data # can be any dir you want, in your user directory (~)
+cd ~/data # cd into that dir, run code here, the scripts will walk you through
 curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/main/install.sh | bash
 ```
