@@ -14,5 +14,5 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
 ```bash
 mkdir ~/data # can be any dir you want, in your user directory (~)
 cd ~/data # cd into that dir, run code here, the scripts will walk you through
-curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/main/install.sh | bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
 ```
