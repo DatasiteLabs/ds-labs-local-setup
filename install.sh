@@ -34,23 +34,16 @@ EOD
     fi
   fi
   
-  pythonMajorVersion=$(python -c"import sys; print(sys.version_info.major)")
-  
-  if [ $pythonMajorVersion -eq 2 ]; then
-    echo "ython 2.7 is deprecated but still the mac default"
-    if ! which pip; then
-      curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py | tee -a "${log_file}"
-      python get-pip.py --user | tee -a "${log_file}"
-    fi
-  else
-    if ! which pip3; then
-      curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py | tee -a "${log_file}"
-      python3 get-pip.py --user | tee -a "${log_file}"
-    fi
+  if ! which pip3; then
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py | tee -a "${log_file}"
+    python3 get-pip.py --user | tee -a "${log_file}"
   fi
   
+  # upgrade pip3
+  python3 -m pip install --upgrade pip
+  
   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
-  python -m pip install --user ansible | tee -a "${log_file}"
+  python3 -m pip install --user ansible | tee -a "${log_file}"
   
   exec -l "$SHELL"
   
