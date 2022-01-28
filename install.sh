@@ -46,6 +46,8 @@ EOD
   python3 -m pip install --user ansible | tee -a "${log_file}"
   
   exec -l "$SHELL"
+
+  "$(python3 -m site --user-base)"/bin/ansible-playbook ./local.yml
   
 #  if test ! "$(command -v brew)"; then
 #    # python3 requires xcode select tools which is easiest installed with brew. 
