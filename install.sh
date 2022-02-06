@@ -46,6 +46,8 @@ EOD
     # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
     python3 -m pip install --user ansible | tee -a "${log_file}"
   fi
+
+  python3 -m pip install --user passlib | tee -a "${log_file}"
   
   "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts --ask-become-pass
 
