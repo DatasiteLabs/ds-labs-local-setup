@@ -3,9 +3,15 @@
   set_fact:
     homebrew_user: '{{ homebrew_user | default(ansible_user_id) }}'
     homebrew_group: '{{ homebrew_group | default(ansible_user_gid) }}'
+- name: Download Homebrew installation script
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    dest: /tmp/installbrew
 - name: Install Brew
   become: false
   ansible.builtin.expect:
-    script: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    command: /bin/bash /tmp/installbrew
     responses:
-      (?i)password: '{{ user_pw }}'
+      (?i)password: "{{ user_pw }}"
+      Press(.*)RETURN(.*)to continue: ""
+  no_log: false
