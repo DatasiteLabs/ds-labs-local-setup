@@ -6,6 +6,6 @@
 - name: Install Brew
   become: false
   ansible.builtin.expect:
-    command: curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    script: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     responses:
       (?i)password: '{{ user_pw }}'
