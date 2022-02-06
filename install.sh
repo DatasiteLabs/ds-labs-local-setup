@@ -44,11 +44,11 @@ EOD
   
   if ! python3 -m pip check ansible; then
     # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
-    python3 -m pip install ansible | tee -a "${log_file}"
+    python3 -m pip install --user ansible | tee -a "${log_file}"
   fi
 
-  if ! python3 -m pip list | grep -q passlib; then
-    python3 -m pip install passlib | tee -a "${log_file}"
+  if ! python3 -m pip check passlib; then
+    python3 -m pip install --user passlib | tee -a "${log_file}"
   fi
   
   "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
