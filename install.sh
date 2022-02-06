@@ -51,7 +51,7 @@ EOD
     python3 -m pip install --user passlib | tee -a "${log_file}"
   fi
   
-  "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts --ask-become-pass
+  "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
 
   exec -l "$SHELL"
   
