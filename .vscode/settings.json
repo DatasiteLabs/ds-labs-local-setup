@@ -1,0 +1,11 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/yamllint.json": "**/00-k8s-vars.yaml",
+        "file:///Users/kaltepe/.vscode/extensions/atlassian.atlascode-2.10.7/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
+        "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json": "file:///Users/kaltepe/data/javelin/ds-labs-local-setup/local.yml",
+        "https://json.schemastore.org/pre-commit-config.json": [
+            "file:///Users/kaltepe/data/javelin/ds-labs-local-setup/.pre-commit-config.yml",
+            "file:///Users/kaltepe/data/javelin/ds-labs-local-setup/.pre-commit-config.yaml"
+        ]
+    }
+}
