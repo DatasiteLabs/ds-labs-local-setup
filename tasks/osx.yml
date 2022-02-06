@@ -5,4 +5,7 @@
     homebrew_group: '{{ homebrew_group | default(ansible_user_gid) }}'
 - name: Install Brew
   become: false
-  script: echo "yes" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  ansible.builtin.expect:
+    command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    responses:
+      (?i)password: '{{ user_pw }}'

@@ -4,6 +4,14 @@
   vars:
     source_key: "./.ssh/id_rsa"
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+  vars_prompt:
+    - name: user_pw
+      prompt: Enter your users password
+      unsafe: true
+      private: true
+      encrypt: sha512_crypt
+      confirm: true
+      salt_size: 7
   tasks:
     - include: tasks/osx.yml
       when: ansible_facts['os_family'] == "Darwin"
