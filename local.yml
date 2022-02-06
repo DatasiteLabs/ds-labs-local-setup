@@ -4,10 +4,6 @@
   vars:
     source_key: "./.ssh/id_rsa"
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-    blah: yo
   tasks:
-    - name: Print all available facts
-      ansible.builtin.debug:
-        var: ansible_facts
     - include: tasks/osx.yml
-      when: ansible_facts['os_family'] == "Debian"
+      when: ansible_facts['os_family'] == "Darwin"
