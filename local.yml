@@ -4,6 +4,9 @@
   vars:
     source_key: "./.ssh/id_rsa"
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    # https://github.com/Homebrew/install/blob/master/install.sh for details on `brew prefex`,
+    # only available post install
+    homebrew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
   vars_prompt:
     - name: user_pw
       prompt: Enter your users password
