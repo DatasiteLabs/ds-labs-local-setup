@@ -17,8 +17,9 @@ cd ~/data # cd into that dir, run code here, the scripts will walk you through
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
 ```
 
-## Running ansbile locally
+## Running Ansible locally
 
 ```bash
 python3 -m pip install --user -r requirements.txt
+"$(python3 -m site --user-base)"/bin/pre-commit install 
 ```

@@ -7,7 +7,7 @@ set -o nounset
 __dir="$(pwd)"
 log_file="${__dir}/install.log"
 
-echo date > "${log_file}"
+echo date >"${log_file}"
 
 if ! pwd | grep -q "${HOME}"; then
   echo "Scripts must be run from within your ${HOME} directory"
@@ -15,12 +15,18 @@ fi
 
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
 
+read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue"
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
     xcode-select --install
     sleep 1
     osascript <<EOD
       tell application "System Events"
+        activate
         tell process "Install Command Line Developer Tools"
           keystroke return
           click button "Agree" of window "License Agreement"
@@ -33,31 +39,31 @@ EOD
       exit 1
     fi
   fi
-  
+
   # ensure pip is available
   python3 -m ensurepip --default-pip
-  
+
   # upgrade pip3
   python3 -m pip install --upgrade pip setuptools wheel
-  
+
   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
   python3 -m pip install --user ansible | tee -a "${log_file}"
 
   # # deps for ansible
   python3 -m pip install --user passlib | tee -a "${log_file}"
   python3 -m pip install --user pexpect | tee -a "${log_file}"
-  
+
   "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
 
   exec -l "$SHELL"
-  
+
 #  if test ! "$(command -v brew)"; then
-#    # python3 requires xcode select tools which is easiest installed with brew. 
+#    # python3 requires xcode select tools which is easiest installed with brew.
 #    echo "[INSTALL]: homebrew" | tee -a "${log_file}"
 #    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" | tee -a
 #    "${log_file}"
-#  fi  
-    
+#  fi
+
 else
   echo "Your machine is not supported yet for this script. See https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems for details and update to add support." | tee -a "${log_file}"
 fi
