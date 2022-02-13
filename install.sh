@@ -53,7 +53,7 @@ EOD
   python3 -m pip install --user passlib | tee -a "${log_file}"
   python3 -m pip install --user pexpect | tee -a "${log_file}"
 
-  "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
+  DATASITE_HOME=${__dir} "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
 
   exec -l "$SHELL"
 
