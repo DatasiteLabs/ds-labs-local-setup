@@ -1,2 +1,5 @@
+ansible
+passlib
+pexpect
 pre-commit
 ansible-lint[community,yamllint]

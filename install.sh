@@ -34,18 +34,16 @@ EOD
     fi
   fi
   
-  if ! which pip3; then
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py | tee -a "${log_file}"
-    python3 get-pip.py --user | tee -a "${log_file}"
-  fi
+  # ensure pip is available
+  python3 -m ensurepip --default-pip
   
   # upgrade pip3
-  python3 -m pip install --upgrade pip
+  python3 -m pip install --upgrade pip setuptools wheel
   
   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
   python3 -m pip install --user ansible | tee -a "${log_file}"
 
-  # deps for ansible
+  # # deps for ansible
   python3 -m pip install --user passlib | tee -a "${log_file}"
   python3 -m pip install --user pexpect | tee -a "${log_file}"
   
