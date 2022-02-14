@@ -35,8 +35,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
     sleep 1
     osascript <<EOD
       tell application "System Events"
-        activate
         tell process "Install Command Line Developer Tools"
+          activate
           keystroke return
           click button "Agree" of window "License Agreement"
         end tell
