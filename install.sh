@@ -51,7 +51,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
         tell process "Install Command Line Developer Tools"
           activate
           set frontmost to true
-          click button "Agree" of front window
+          click button "Agree" of window "License Agreement"
         end tell
       end tell
 EOD
