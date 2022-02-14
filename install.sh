@@ -26,13 +26,9 @@ if [[ $(uname -s) == "Darwin" ]]; then
     xcode-select --install
     sleep 1
     osascript <<EOD
-      tell application "System Events" to tell application process "CoreServicesUIAgent"
-        tell button [0] in window 1
-          perform action "AXPress"
-        end tell
-      end tell
       tell application "System Events"
         activate
+        click button "Allow" in front window
         tell process "Install Command Line Developer Tools"
           keystroke return
           click button "Agree" of window "License Agreement"
