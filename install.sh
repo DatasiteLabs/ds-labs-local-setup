@@ -32,8 +32,8 @@ EOD
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
     sleep 2
-    xcodebuild -license accept
-    # xcode-select --install
+    xcode-select --install
+    sudo xcodebuild -license accept
     sleep 1
     osascript <<EOD
       tell application "System Events"
