@@ -14,8 +14,9 @@ if ! pwd | grep -q "${HOME}"; then
 fi
 
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
-
+echo ""
 read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue after complete"
+echo ""
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -32,8 +33,8 @@ EOD
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
     sleep 2
-    xcode-select --install
     sudo xcodebuild -license accept
+    xcode-select --install
     sleep 1
     osascript <<EOD
       tell application "System Events"
