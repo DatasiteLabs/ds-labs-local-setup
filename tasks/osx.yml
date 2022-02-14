@@ -1,4 +1,11 @@
 ---
+- name: "Install homebrew packages"
+  community.general.homebrew:
+    name: [
+      'python',
+      'vim',
+      'grep'
+    ]
 # - name: Determine Homebrew ownership variables
 #   set_fact:
 #     homebrew_user: '{{ homebrew_user | default(ansible_user_id) }}'
@@ -40,14 +47,14 @@
 #       become_method: sudo
 #       when: "ansible_distribution_version is version('10.13', '<')"
 #   when: ansible_machine == 'x86_64'
-- name: Download Homebrew installation script
-  get_url:
-    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-    dest: /tmp/installbrew
-- name: Install Homebrew
-  become: false
-  ansible.builtin.expect:
-    command: /bin/bash /tmp/installbrew
-    responses:
-      (?i)password: "{{ user_pw }}"
-      Press(.*)RETURN(.*)to continue: ""
+# - name: Download Homebrew installation script
+#   get_url:
+#     url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+#     dest: /tmp/installbrew
+# - name: Install Homebrew
+#   become: false
+#   ansible.builtin.expect:
+#     command: /bin/bash /tmp/installbrew
+#     responses:
+#       (?i)password: "{{ user_pw }}"
+#       Press(.*)RETURN(.*)to continue: ""

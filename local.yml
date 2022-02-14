@@ -8,12 +8,12 @@
     # only available post install
     homebrew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
     datasite_home: "{{ lookup('env','DATASITE_HOME') }}"
-  vars_prompt:
-    - name: user_pw
-      prompt: Enter your users password
-      unsafe: true
-      private: true
-      confirm: true
+  # vars_prompt:
+  #   - name: user_pw
+  #     prompt: Enter your users password
+  #     unsafe: true
+  #     private: true
+  #     confirm: true
   pre_tasks:
     - assert:
         that: datasite_home | length > 2
