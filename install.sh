@@ -41,6 +41,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
           set frontmost to true
           click button "Install" of front window
           sleep 1
+          set frontmost to true
           click button "Agree" of window "License Agreement"
         end tell
       end tell
