@@ -24,9 +24,8 @@ osascript -e 'tell application "System Preferences" to quit'
 sleep 2
 osascript <<EOD
   tell application "System Events"
-      sleep 1
-      run script "get name of front window of app \"System Events\"" --result: a window name
-      click button "OK" of window "a window name"
+      activate
+      display dialog "This should allow scripts to execute after you allow access."
   end tell
 EOD
 

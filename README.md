@@ -43,6 +43,10 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
   ```
 
+  During the script there are a few prompts to setup privileges, follow the instructions. If you see a dialog like the following click 'OK', you may have to re-run the script.
+
+  ![Script Editor Permissions](./image/security-approval-window.jpg)
+
 ## Running Ansible locally
 
   ```bash
