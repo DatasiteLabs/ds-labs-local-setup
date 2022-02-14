@@ -47,6 +47,9 @@ if [[ $(uname -s) == "Darwin" ]]; then
           sleep 1
         end tell
       end tell
+EOD
+    sleep 1
+    osascript <<EOD
       tell application "System Events"
         tell process "Install Command Line Developer Tools"
           activate
@@ -55,6 +58,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
         end tell
       end tell
 EOD
+    sleep 1
     read -r -p "Wait for the xcode installer to complete. Press [enter] to continue."
     if ! xcode-select -p; then
       echo "xcode-select tools did not complete."
