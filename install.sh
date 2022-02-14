@@ -23,12 +23,12 @@ osascript -e 'tell application "System Preferences" to quit'
 # run a script to allow terminal to control apps
 sleep 2
 osascript <<EOD
-  tell application "Finder" to make new Finder window
   tell application "System Events"
       activate
-      click button "OK" in front window
+      sleep 1
+      run script "get name of front window of app \"System Events\"" --result: a window name
+      click button "OK" of window "a window name"
   end tell
-  tell application "Finder" to quit
 EOD
 
 if [[ $(uname -s) == "Darwin" ]]; then
@@ -37,6 +37,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
     sleep 1
     osascript <<EOD
       tell application "System Events"
+        activate
         tell process "Install Command Line Developer Tools"
           keystroke return
           click button "Agree" of window "License Agreement"
