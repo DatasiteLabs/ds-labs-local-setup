@@ -34,11 +34,11 @@ EOD
 echo "Follow the prompts to install xcode command line tools."
 
 if [[ $(uname -s) == "Darwin" ]]; then
-  if ! xcode-select -p; then
+  if ! xcode-select -v; then
     sleep 2
     xcode-select --install
     read -r -p "Wait for the xcode installer to complete. Press [enter] to continue."
-    if ! xcode-select -p; then
+    if ! xcode-select -v; then
       echo "xcode-select tools did not complete."
       exit 1
     fi
