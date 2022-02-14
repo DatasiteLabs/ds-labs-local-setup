@@ -26,6 +26,8 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
       ![Script Editor Permissions Screen](./image/script-editor-permissions.jpg)
 
     1. Select the checkbox to the left of the app.
+    1. Repeat the process for 'Terminal' for Automation
+
     1. Quit the System Preferences application (`command + q`)
 
 1. Configure a data home directory. Co-locating things makes relative path-ing easier.
