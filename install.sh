@@ -46,8 +46,11 @@ if [[ $(uname -s) == "Darwin" ]]; then
           click button "Install" of front window
           sleep 1
         end tell
+      end tell
+      tell application "System Events"
         tell process "Install Command Line Developer Tools"
-          # set frontmost to true
+          activate
+          set frontmost to true
           click button "Agree" of front window
         end tell
       end tell
