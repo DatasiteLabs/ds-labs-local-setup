@@ -37,6 +37,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
     # xcode-select --install
     sleep 1
     osascript <<EOD
+      get entire contents of window 1
       tell application "System Events"
         tell process "Install Command Line Developer Tools"
           activate
