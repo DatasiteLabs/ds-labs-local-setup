@@ -31,13 +31,15 @@ EOD
 
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
+    sleep 2
     xcode-select --install
     sleep 1
     osascript <<EOD
       tell application "System Events"
         tell process "Install Command Line Developer Tools"
           activate
-          keystroke return
+          click button "Install" of window "Install Command Line Developer Tools"
+          sleep 1
           click button "Agree" of window "License Agreement"
         end tell
       end tell
