@@ -16,7 +16,6 @@ fi
 echo ""
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
 echo ""
-curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/scripts/show_security_settings.applescript | osascript
 read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue after complete"
 echo ""
 # Close any open System Preferences panes, to prevent them from overriding
