@@ -13,6 +13,7 @@ if ! pwd | grep -q "${HOME}"; then
   echo "Scripts must be run from within your ${HOME} directory"
 fi
 
+echo ""
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
 echo ""
 read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue after complete"
@@ -30,11 +31,12 @@ osascript <<EOD
   end tell
 EOD
 
+echo "Follow the prompts to install xcode command line tools."
+
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
     sleep 2
-    sudo xcodebuild -license accept
-    # xcode-select --install
+    xcode-select --install
     sleep 1
     osascript <<EOD
       get entire contents of window 1
@@ -45,7 +47,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
           click button "Install" of front window
           sleep 1
           # set frontmost to true
-          # click button "Agree" of window "License Agreement"
+          click button "Agree" of front window
         end tell
       end tell
 EOD
