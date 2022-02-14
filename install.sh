@@ -38,7 +38,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
       tell application "System Events"
         tell process "Install Command Line Developer Tools"
           activate
-          click button "Install" of window "Install Command Line Developer Tools"
+          set frontmost to true
+          click button "Install" of front window
           sleep 1
           click button "Agree" of window "License Agreement"
         end tell
