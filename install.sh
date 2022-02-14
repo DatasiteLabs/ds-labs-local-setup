@@ -32,7 +32,8 @@ EOD
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
     sleep 2
-    xcode-select --install
+    xcodebuild -license accept
+    # xcode-select --install
     sleep 1
     osascript <<EOD
       tell application "System Events"
@@ -41,8 +42,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
           set frontmost to true
           click button "Install" of front window
           sleep 1
-          set frontmost to true
-          click button "Agree" of window "License Agreement"
+          # set frontmost to true
+          # click button "Agree" of window "License Agreement"
         end tell
       end tell
 EOD
