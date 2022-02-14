@@ -15,16 +15,22 @@ fi
 
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
 
-read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue"
+read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue after complete"
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
 if [[ $(uname -s) == "Darwin" ]]; then
   if ! xcode-select -p; then
+    sleep 2
     xcode-select --install
     sleep 1
     osascript <<EOD
+      tell application "System Events" to tell application process "CoreServicesUIAgent"
+        tell button [0] in window 1
+          perform action "AXPress"
+        end tell
+      end tell
       tell application "System Events"
         activate
         tell process "Install Command Line Developer Tools"

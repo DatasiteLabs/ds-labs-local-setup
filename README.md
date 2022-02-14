@@ -21,12 +21,12 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
     1. Click the Privacy tab.
     1. Click Accessibility.
     1. Click the Add button (+).
-    1. Choose an app (`/Applications/Utilities/Script Editor`) and click Open.
+    1. Choose an app (`/Applications/Utilities/Terminal`) and click Open.
 
       ![Script Editor Permissions Screen](./image/script-editor-permissions.jpg)
 
     1. Select the checkbox to the left of the app.
-    1. Quit the System Preferences applicaiton (`command + q`)
+    1. Quit the System Preferences application (`command + q`)
 
 1. Configure a data home directory. Co-locating things makes relative path-ing easier.
 
