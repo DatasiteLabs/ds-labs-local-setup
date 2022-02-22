@@ -8,7 +8,12 @@
     # only available post install
     homebrew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
     datasite_home: "{{ lookup('env','DATASITE_HOME') }}"
-  # vars_prompt:
+  vars_prompt:
+    - name: ds_email
+      prompt: Enter your Datasite email
+      confirm: true
+    - name: github_access_token
+      prompt: "Github access token with scopes: public-key"
   #   - name: user_pw
   #     prompt: Enter your users password
   #     unsafe: true
@@ -18,5 +23,9 @@
     - assert:
         that: datasite_home | length > 2
   tasks:
+    - name: Read machine hostname var
+      ansible.builtin.shell: hostname
+      register: machine_hostname
     - include: tasks/osx.yml
       when: ansible_facts['os_family'] == "Darwin"
+    #  - include: tasks/ssh.yml # noqa comments-indentation

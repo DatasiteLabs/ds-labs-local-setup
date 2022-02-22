@@ -27,6 +27,9 @@ echo ""
 
 brew install ansible
 
+# validation
+ansible --version
+
 # validate installs
 if ! xcode-select -p; then
   echo "xcode-select tools did not complete."
@@ -78,7 +81,7 @@ python --version
 #   python3 -m pip install --user passlib | tee -a "${log_file}"
 #   python3 -m pip install --user pexpect | tee -a "${log_file}"
 
-#   DATASITE_HOME=${__dir} "$(python3 -m site --user-base)"/bin/ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
+  DATASITE_HOME=${__dir} ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
 
   exec -l "$SHELL"
 

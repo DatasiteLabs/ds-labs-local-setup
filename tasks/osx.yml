@@ -2,9 +2,13 @@
 - name: "Install homebrew packages"
   community.general.homebrew:
     name: [
+      # Update common tools
       'python',
       'vim',
-      'grep'
+      'grep',
+      'openssh',
+      'bash',  # bash 4
+      'bash-completions2'
     ]
 # - name: Determine Homebrew ownership variables
 #   set_fact:
