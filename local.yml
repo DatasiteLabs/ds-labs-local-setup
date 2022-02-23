@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
   vars:
     source_key: "./.ssh/id_rsa"
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
@@ -12,6 +11,7 @@
   vars_prompt:
     - name: ds_email
       prompt: Enter your Datasite email
+      private: false
     - name: github_access_token
       prompt: "Github access token with scopes: public-key"
   #   - name: user_pw
