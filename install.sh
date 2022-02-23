@@ -21,13 +21,13 @@ if test ! "$(command -v brew)"; then
   # install brew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo ""
-  brew doctor | tee -a "${log_file}"
+  brew doctor
   echo ""
   read -r -p "Check the output of the 'brew doctor' command above. Fix any issues and re-run 'brew doctor'. Press [enter] to continue if there were no issues."
   echo ""
 else
-  echo "SKIP brew already installed." | tee -a "${log_file}"
-  echo "UPDATE updating brew" | tee -a "${log_file}"
+  echo "SKIP brew already installed."
+  echo "UPDATE updating brew"
   brew upgrade
   brew cleanup
 fi
@@ -37,8 +37,8 @@ brew --version
 if test ! "$(command -v ansible)"; then
   brew install ansible
 else 
-  echo "SKIP ansible already installed." | tee -a "${log_file}"
-  echo "UPDATE updating ansible" | tee -a "${log_file}"
+  echo "SKIP ansible already installed."
+  echo "UPDATE updating ansible"
   brew upgrade ansible
 fi
 
@@ -88,20 +88,21 @@ fi
 #   python3 -m pip install --upgrade pip setuptools wheel
 
 #   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
-#   python3 -m pip install --user ansible | tee -a "${log_file}"
+#   python3 -m pip install --user ansible
 
 #   # # deps for ansible
-#   python3 -m pip install --user passlib | tee -a "${log_file}"
-#   python3 -m pip install --user pexpect | tee -a "${log_file}"
+#   python3 -m pip install --user passlib
+#   python3 -m pip install --user pexpect
 
 export DATASITE_HOME=${__dir} 
-ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts -vvv
+ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup --directory "${__dir}/ds-labs-local-setup"
+ansible-playbook "${__dir}/ds-labs-local-setup/local.yml" -i hosts
 
 exec -l "$SHELL"
 
 #  if test ! "$(command -v brew)"; then
 #    # python3 requires xcode select tools which is easiest installed with brew.
-#    echo "[INSTALL]: homebrew" | tee -a "${log_file}"
+#    echo "[INSTALL]: homebrew"
 #    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" | tee -a
 #    "${log_file}"
 #  fi
