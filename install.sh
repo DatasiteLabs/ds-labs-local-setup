@@ -5,9 +5,9 @@ set -o nounset
 [[ ${DEBUG:-} == true ]] && set -o xtrace
 
 __dir="$(pwd)"
-log_file="${__dir}/install.log"
+# log_file="${__dir}/install.log"
 
-echo date >"${log_file}"
+# echo date >"${log_file}"
 
 if ! pwd | grep -q "${HOME}"; then
   echo "Scripts must be run from within your ${HOME} directory"
@@ -95,8 +95,7 @@ fi
 #   python3 -m pip install --user pexpect
 
 export DATASITE_HOME=${__dir} 
-ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup --directory "${__dir}/ds-labs-local-setup"
-ansible-playbook "${__dir}/ds-labs-local-setup/local.yml" -i hosts
+ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 -i hosts -vvv
 
 exec -l "$SHELL"
 
