@@ -94,9 +94,9 @@ fi
 #   python3 -m pip install --user passlib | tee -a "${log_file}"
 #   python3 -m pip install --user pexpect | tee -a "${log_file}"
 
-  DATASITE_HOME=${__dir} ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
+DATASITE_HOME=${__dir} ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts
 
-  exec -l "$SHELL"
+exec -l "$SHELL"
 
 #  if test ! "$(command -v brew)"; then
 #    # python3 requires xcode select tools which is easiest installed with brew.
@@ -104,10 +104,6 @@ fi
 #    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" | tee -a
 #    "${log_file}"
 #  fi
-
-else
-  echo "Your machine is not supported yet for this script. See https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems for details and update to add support." | tee -a "${log_file}"
-fi
 
 echo ''
 exit 0
