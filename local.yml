@@ -12,7 +12,6 @@
   vars_prompt:
     - name: ds_email
       prompt: Enter your Datasite email
-      private: false
     - name: github_access_token
       prompt: "Github access token with scopes: public-key"
   #   - name: user_pw
