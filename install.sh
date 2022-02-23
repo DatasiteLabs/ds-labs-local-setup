@@ -17,15 +17,30 @@ echo ""
 read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
 echo ""
 
-# install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo ""
-brew doctor | tee -a "${log_file}"
-echo ""
-read -r -p "Check the output of the 'brew doctor' command above. Fix any issues and re-run 'brew doctor'. Press [enter] to continue if there were no issues."
-echo ""
+if test ! "$(command -v brew)"; then
+  # install brew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo ""
+  brew doctor | tee -a "${log_file}"
+  echo ""
+  read -r -p "Check the output of the 'brew doctor' command above. Fix any issues and re-run 'brew doctor'. Press [enter] to continue if there were no issues."
+  echo ""
+else
+  echo "SKIP brew already installed." | tee -a "${log_file}"
+  echo "UPDATE updating brew" | tee -a "${log_file}"
+  brew upgrade
+  brew cleanup
+fi
 
-brew install ansible
+brew --version
+
+if test ! "$(command -v ansible)"; then
+  brew install ansible
+else 
+  echo "SKIP ansible already installed." | tee -a "${log_file}"
+  echo "UPDATE updating ansible" | tee -a "${log_file}"
+  brew upgrade ansible
+fi
 
 # validation
 ansible --version
@@ -37,8 +52,6 @@ if ! xcode-select -p; then
 else 
   echo "xcode-select tools installed."
 fi
-
-python --version
 
 # read -r -p "enable script editor and terminal: https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html. press [enter] to continue after complete"
 # echo ""
