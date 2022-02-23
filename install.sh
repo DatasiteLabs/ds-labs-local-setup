@@ -94,7 +94,7 @@ fi
 #   python3 -m pip install --user passlib | tee -a "${log_file}"
 #   python3 -m pip install --user pexpect | tee -a "${log_file}"
 
-/bin/bash -c "$(DATASITE_HOME=${__dir} ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts -v)"
+DATASITE_HOME=${__dir} ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -i hosts -vv
 
 exec -l "$SHELL"
 
