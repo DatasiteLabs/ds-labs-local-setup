@@ -95,7 +95,7 @@ fi
 #   python3 -m pip install --user pexpect
 
 export DATASITE_HOME=${__dir} 
-ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup -c main --directory "${__dir}/ds-labs-local-setup" --list-hosts
+ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup
 
 exec -l "$SHELL"
 
