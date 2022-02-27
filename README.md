@@ -22,11 +22,12 @@ The general idea is the script checks for dependencies and installs or updates.
 1. Verifies xcode-select was successful
 1. Has the user setup a "DATASITE_HOME", a directory where all data can live
 1. Sets up ansible playbook dependencies and executes the local ansible script
+1. Finally force reload the shell
 
 ## Background Information
 
 This repo is open source / public and is intended to provide the setup scripts that don't need authentication to get
-started. This is primarily the base setup to allow Datasite employees to execute other setups. It may provide value to others, or serve as an example.
+started. This is primarily the base setup to allow Datasite employees to execute other setups. It may provide limited value to others, or serve as an example.
 
 Installing brew and xcode tools have been the trickiest part of our machine setups with OS changes and hardware changes. If you get a machine with brew and xcode tools already setup it's significantly easier and faster. The script will check for installs and do updates if already installed.
 

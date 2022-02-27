@@ -81,11 +81,11 @@ fi
 #     fi
 #   fi
 
-#   # ensure pip is available
-#   python3 -m ensurepip --default-pip
+# ensure pip is available
+python3 -m ensurepip --default-pip
 
-#   # upgrade pip3
-#   python3 -m pip install --upgrade pip setuptools wheel
+# upgrade pip3
+python3 -m pip install --upgrade pip setuptools wheel
 
 #   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
 #   python3 -m pip install --user ansible
