@@ -34,22 +34,29 @@ fi
 
 brew --version
 
+# get latest python3 and manage with brew
+brew install python
+# update default tools
+python3 -m pip install --upgrade pip setuptools wheel
+
 if test ! "$(command -v ansible)"; then
-  brew install ansible
-else 
-  echo "SKIP ansible already installed."
-  echo "UPDATE updating ansible"
-  brew upgrade ansible
+  #   brew install ansible
+  # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
+  python3 -m pip install --user ansible
+# else
+#   echo "SKIP ansible already installed."
+#   echo "UPDATE updating ansible"
+#   brew upgrade ansible
 fi
 
-# validation
-ansible --version
+# # validation
+# ansible --version
 
 # validate installs
 if ! xcode-select -p; then
   echo "xcode-select tools did not complete."
   exit 1
-else 
+else
   echo "xcode-select tools installed."
 fi
 
@@ -83,21 +90,15 @@ fi
 
 # ensure pip is available
 # python3 -m ensurepip --default-pip
-python3 -m pip install --user --upgrade pip setuptools wheel
-# ensure virtualenv is installed
-python3 -m pip install --user virtualenv
-
+# python3 -m pip install --user --upgrade pip setuptools wheel venv
 # # upgrade pip3
 # python3 -m pip install --upgrade pip setuptools wheel
-
-#   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
-#   python3 -m pip install --user ansible
 
 #   # # deps for ansible
 # python3 -m pip install --user passlib
 # python3 -m pip install --user pexpect
 
-export DATASITE_HOME=${__dir} 
+export DATASITE_HOME=${__dir}
 git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
 cd "${DATASITE_HOME}/ds-labs-local-setup"
 ansible-galaxy install -r requirements.yml
