@@ -20,6 +20,7 @@ The general idea is the script checks for dependencies and installs or updates.
 1. Installs ansible with brew
     - This ensures the python version and ansible play nice together
 1. Verifies xcode-select was successful
+1. Ensures pip is installed and updated for python3, along with setuptools and virtualenv.
 1. Has the user setup a "DATASITE_HOME", a directory where all data can live
 1. Sets up ansible playbook dependencies and executes the local ansible script
 1. Finally force reload the shell
