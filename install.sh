@@ -82,7 +82,8 @@ fi
 #   fi
 
 # ensure pip is available
-python3 -m ensurepip --default-pip
+# python3 -m ensurepip --default-pip
+python3 -m pip install --user --upgrade pip setuptools wheel
 # ensure virtualenv is installed
 python3 -m pip install --user virtualenv
 
