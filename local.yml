@@ -26,6 +26,8 @@
     - name: Install python dependencies
       pip:
         name:
+          - setuptools
+          - wheel
           - passlib
           - pexpect
   tasks:

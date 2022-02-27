@@ -98,7 +98,7 @@ export DATASITE_HOME=${__dir}
 git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
 cd "${DATASITE_HOME}/ds-labs-local-setup"
 ansible-galaxy install -r requirements.yml
-ansible-playbook -i "localhost," -c local local.yml
+ansible-playbook -i "localhost," -c local local.yml -vvv
 # ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
 
 exec -l "$SHELL"

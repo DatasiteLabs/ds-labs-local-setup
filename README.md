@@ -1,15 +1,34 @@
 # ds-labs-local-setup
 
-General tools and/or setup scripts
+General tools and/or setup scripts. This is a very base level setup.
 
-## Getting Started
+## Installing
+
+I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
+```
+
+**NOTE**: during development of this script you may want to replace HEAD with the branch name to avoid caching/delays in updates. Opening a fresh terminal tab also helps.
+
+### What the install script does
+
+The general idea is the script checks for dependencies and installs or updates.
+
+1. Installs brew (now includes xcode select tools)
+1. Installs ansible with brew
+    - This ensures the python version and ansible play nice together
+1. Verifies xcode-select was successful
+1. Has the user setup a "DATASITE_HOME", a directory where all data can live
+1. Sets up ansible playbook dependencies and executes the local ansible script
+
+## Background Information
 
 This repo is open source / public and is intended to provide the setup scripts that don't need authentication to get
-started.
+started. This is primarily the base setup to allow Datasite employees to execute other setups. It may provide value to others, or serve as an example.
 
-If you have a brand new machine, this script will install pip and setup ansible and clone this repo. From that point on the repo/ansible will control your setup.
-
-I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/main/install.sh) in your browser before executing.
+Installing brew and xcode tools have been the trickiest part of our machine setups with OS changes and hardware changes. If you get a machine with brew and xcode tools already setup it's significantly easier and faster. The script will check for installs and do updates if already installed.
 
 ### Pre-Requisites
 
@@ -38,10 +57,6 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
       ```
 
 ### Run the Script
-
-  ```bash
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
-  ```
 
   During the script there are a few prompts to setup privileges, follow the instructions. If you see a dialog like the following click 'OK', you may have to re-run the script.
 
