@@ -91,11 +91,15 @@ fi
 #   python3 -m pip install --user ansible
 
 #   # # deps for ansible
-#   python3 -m pip install --user passlib
-#   python3 -m pip install --user pexpect
+# python3 -m pip install --user passlib
+# python3 -m pip install --user pexpect
 
 export DATASITE_HOME=${__dir} 
-ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
+git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
+cd "${DATASITE_HOME}/ds-labs-local-setup"
+ansible-galaxy install -r requirements.yml
+ansible-playbook -i "localhost," -c local local.yml
+# ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
 
 exec -l "$SHELL"
 

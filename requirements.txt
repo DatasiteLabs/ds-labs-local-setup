@@ -1,4 +1,3 @@
-ansible
 passlib
 pexpect
 pre-commit

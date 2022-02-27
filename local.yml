@@ -23,6 +23,11 @@
   pre_tasks:
     - assert:
         that: datasite_home | length > 2
+    - name: Install python dependencies
+      pip:
+        name:
+          - passlib
+          - pexpect
   tasks:
     - name: Read machine hostname var
       ansible.builtin.shell: hostname
