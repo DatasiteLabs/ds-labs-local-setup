@@ -43,9 +43,10 @@ if test ! "$(command -v ansible)"; then
   #   brew install ansible
   # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
   python3 -m pip install --user ansible
-# else
-#   echo "SKIP ansible already installed."
-#   echo "UPDATE updating ansible"
+else
+  echo "SKIP ansible already installed."
+  echo "UPDATE updating ansible"
+  python3 -m pip install --user --upgrade ansible
 #   brew upgrade ansible
 fi
 
@@ -99,10 +100,11 @@ fi
 # python3 -m pip install --user pexpect
 
 export DATASITE_HOME=${__dir}
+ANSIBLE_PATH="$(python3 -m site --user-base)/bin"
 git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
 cd "${DATASITE_HOME}/ds-labs-local-setup"
-ansible-galaxy install -r requirements.yml
-ansible-playbook -i "localhost," -c local local.yml -vvv
+"${ANSIBLE_PATH}/ansible-galaxy" install -r requirements.yml
+"${ANSIBLE_PATH}/ansible-playbook" -i "localhost," -c local local.yml -vvv
 # ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
 
 exec -l "$SHELL"

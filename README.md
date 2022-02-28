@@ -17,9 +17,9 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
 The general idea is the script checks for dependencies and installs or updates.
 
 1. Installs brew (now includes xcode select tools)
-1. Installs ansible with brew
-    - This ensures the python version and ansible play nice together
 1. Verifies xcode-select was successful
+1. Installs ansible with pip
+    - This is the recommended install for mac osx.
 1. Ensures pip is installed and updated for python3, along with setuptools, wheel.
 1. Has the user setup a "DATASITE_HOME", a directory where all data can live
 1. Sets up ansible playbook dependencies and executes the local ansible script
