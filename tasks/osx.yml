@@ -8,7 +8,8 @@
       'grep',
       'openssh',
       'bash',  # bash 4
-      'bash-completions2'
+      'bash-completions@2',
+      'zsh-completions'
     ]
 # - name: Determine Homebrew ownership variables
 #   set_fact:
