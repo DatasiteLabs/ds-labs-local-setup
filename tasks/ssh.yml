@@ -1,4 +1,12 @@
 ---
+- name: Ensure .ssh directory exists.
+  file:
+    dest: "{{ dest_key | dirname }}"
+    mode: 0700
+    state: directory
+  tags:
+    - install
+    - ssh
 - name: Generate an Open SSH key pair
   community.crypto.openssh_keypair:
     path: "{{ lookup('env','HOME') }}/.ssh/id_ed25519"
