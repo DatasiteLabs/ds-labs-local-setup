@@ -2,6 +2,7 @@
 - name: Install Core Packages
   ansible.builtin.package:
     name:
+      - asdf
       # Update latest bash
       - bash
       - bash-completion@2

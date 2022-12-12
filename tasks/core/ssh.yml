@@ -28,7 +28,7 @@
     - ssh
 # connect to github
 - name: Read SSH public key to authorize
-  ansible.builtin.command: cat "{{ lookup('env','HOME') }}/.ssh/id_ed25519.pub"
+  ansible.builtin.command: cat "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519.pub"
   register: ssh_pub_key
   changed_when: ssh_pub_key.rc != 0
 - name: Authorize key with GitHub

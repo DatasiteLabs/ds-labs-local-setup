@@ -1,0 +1,18 @@
+---
+- name: Add custom homebrew repos
+  community.general.homebrew_tap:
+    name: homebrew/cask-fonts,mongodb/brew,homebrew/cask-drivers
+  tags:
+    - brew
+    - install
+- name: Install brew packages
+  community.general.homebrew:
+    update_homebrew: true
+    upgrade_all: true
+    name:
+      - mongodb-community
+      - nvm
+      - rabbitmq
+  tags:
+    - brew
+    - install
