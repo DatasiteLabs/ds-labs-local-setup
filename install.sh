@@ -107,7 +107,10 @@ fi
 
 export DATASITE_HOME=${__dir}
 ANSIBLE_PATH="$(python3 -m site --user-base)/bin"
-git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
+if [[ ! -d "${DATASITE_HOME}/ds-labs-local-setup" ]]; then
+  git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
+fi
+
 cd "${DATASITE_HOME}/ds-labs-local-setup"
 "${ANSIBLE_PATH}/ansible-galaxy" install -r requirements.yml
 "${ANSIBLE_PATH}/ansible-playbook" -i "localhost," -c local local.yml -vvv
