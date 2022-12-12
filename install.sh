@@ -80,8 +80,6 @@ fi
 if test ! "$(command -v sdk)"; then
   curl -s "https://get.sdkman.io" | bash
   read -r -p "Check the output of sdkman to make sure it was successful. Follow suggestions than reload the terminal and re-run script to continue. Press [enter] to continue."
-  # shellcheck disable=SC1091
-  source "${HOME}/.sdkman/bin/sdkman-init.sh"
 else
   echo "SKIP sdkman already installed."
   echo "UPDATE updating sdkman"
