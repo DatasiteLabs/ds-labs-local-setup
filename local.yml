@@ -8,6 +8,7 @@
     # only available post install
     homebrew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
     datasite_home: "{{ lookup('env','DATASITE_HOME') }}"
+    downloads: "{{ ansible_env.HOME }}/.ansible-downloads"
   vars_prompt:
     - name: ds_email
       prompt: Enter your Datasite email
