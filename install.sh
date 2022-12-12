@@ -95,7 +95,7 @@ fi
 
 cd "${DATASITE_HOME}/ds-labs-local-setup"
 "${ANSIBLE_PATH}/ansible-galaxy" install -r requirements.yml
-"${ANSIBLE_PATH}/ansible-playbook" -i "localhost," -c local local.yml -vvv
+"${ANSIBLE_PATH}/ansible-playbook" -i "localhost," -c local local.yml -vvv --ask-become-pass
 # ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
 
 exec -l "$SHELL"
