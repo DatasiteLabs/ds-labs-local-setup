@@ -1,0 +1,67 @@
+---
+- name: Install Core Packages
+  ansible.builtin.package:
+    name:
+      # Update latest bash
+      - bash
+      - bash-completion@2
+      # Install GNU core utilities (those that come with macOS are outdated).
+      # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
+      - coreutils
+      - gh
+      - git
+      - git-lfs
+      - git-secrets
+      - gnupg
+      - grep
+      - jq
+      - k9s
+      - mas
+      - openssh
+      - openssl
+      # update latest zsh
+      - zsh
+      - zsh-completions
+    state: latest
+  register: updated_packages
+  tags:
+    - core
+    - install
+- name: Get the path to Bash
+  delegate_to: localhost
+  ansible.builtin.command: command which bash
+  register: bash_path
+  changed_when: false
+  tags:
+    - core
+    - install
+    - productivity
+
+- name: "Ensure homebrew bash is in allowed shells"
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ bash_path.stdout }}"
+  become: true
+  tags:
+    - core
+    - install
+    - productivity
+- name: Get the path to ZSH
+  delegate_to: localhost
+  ansible.builtin.command: command which zsh
+  register: zsh_path
+  changed_when: false
+  tags:
+    - core
+    - install
+    - productivity
+
+- name: "Ensure homebrew zsh is in allowed shells"
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ zsh_path.stdout }}"
+  become: true
+  tags:
+    - core
+    - install
+    - productivity

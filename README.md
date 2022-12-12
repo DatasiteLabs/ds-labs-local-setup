@@ -1,10 +1,10 @@
 # ds-labs-local-setup
 
-General tools and/or setup scripts. This is a very base level setup.
+General tools and/or setup scripts. This is a very base-level setup.
 
 ## Installing
 
-I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing.
+I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing it.
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
@@ -31,7 +31,6 @@ This repo is open source / public and is intended to provide the setup scripts t
 started. This is primarily the base setup to allow Datasite employees to execute other setups. It may provide limited value to others, or serve as an example.
 
 Installing brew and xcode tools have been the trickiest part of our machine setups with OS changes and hardware changes. If you get a machine with brew and xcode tools already setup it's significantly easier and faster. The script will check for installs and do updates if already installed.
-
 
 ### Pre-Requisites
 

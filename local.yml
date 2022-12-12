@@ -12,16 +12,20 @@
     - name: ds_email
       prompt: Enter your Datasite email
       private: false
+    - name: my_ssh_passphrase
+      prompt: What is your ssh passphrase? (git, etc)
+      private: true
+      confirm: false
     - name: github_access_token
-      prompt: "Github access token with scopes: public-key"
-  #   - name: user_pw
-  #     prompt: Enter your users password
-  #     unsafe: true
-  #     private: true
-  #     confirm: true
+      prompt: Github Access Token for updating keys
+      private: true
+      confirm: false
   pre_tasks:
-    - assert:
-        that: datasite_home | length > 2
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ datasite_home }}"
+        state: directory
+        mode: '0755'
     - name: Install python dependencies
       pip:
         name:
@@ -31,7 +35,18 @@
     - name: Read machine hostname var
       ansible.builtin.shell: hostname
       register: machine_hostname
+      tags:
+        - always
     - set_fact: machine_hostname={{ machine_hostname.stdout }}
-    - include: tasks/osx.yml
+      tags:
+        - always
+    - name: Create Ansible downloads directory
+      file: path={{ downloads }} state=directory
+    - name: Setting installer source to "{{ downloads }}"
+      set_fact:
+        installer_source: "{{downloads}}"
+    - include: tasks/osx/main.yml
       when: ansible_facts['os_family'] == "Darwin"
-    - include: tasks/ssh.yml
+    - include: tasks/homebrew/main.yml
+      when: ansible_facts['os_family'] == "Darwin"
+    - include: tasks/core/ssh.yml
