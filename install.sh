@@ -21,14 +21,9 @@ if test ! "$(command -v brew)"; then
   # install brew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo ""
-  if test ! "$(command -v brew)"; then
-    echo "ADDING brew to path in ~/.zprofile"
-    echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >>~/.zprofile
-    eval "$(brew --prefix)/bin/brew shellenv"
-  fi
 
   if test ! "$(command -v brew)"; then
-    read -r -p "Check the output of brew to make sure it was successful. Follow suggestions on adding to path and re-run this script. Press [enter] to continue."
+    read -r -p "Check the output of brew to make sure it was successful. Follow suggestions on adding to path and reload your terminal than re-run this script if it exits. Press [enter] to continue."
   fi
 
   echo ""
