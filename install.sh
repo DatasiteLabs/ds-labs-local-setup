@@ -5,9 +5,6 @@ set -o nounset
 [[ ${DEBUG:-} == true ]] && set -o xtrace
 
 __dir="$(pwd)"
-# log_file="${__dir}/install.log"
-
-# echo date >"${log_file}"
 
 if ! pwd | grep -q "${HOME}"; then
   echo "Scripts must be run from within your ${HOME} directory"
@@ -77,6 +74,9 @@ fi
 # python3 -m pip install --user passlib
 # python3 -m pip install --user pexpect
 
+export SDKMAN_DIR="${HOME}/.sdkman"
+# shellcheck disable=SC1091
+[[ -s "${HOME}/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 if test ! "$(command -v sdk)"; then
   curl -s "https://get.sdkman.io" | bash
   read -r -p "Check the output of sdkman to make sure it was successful. Follow suggestions than reload the terminal and re-run script to continue. Press [enter] to continue."
