@@ -17,7 +17,6 @@
       - grep
       - jq
       - k9s
-      - mas
       - openssh
       - openssl
       # update latest zsh
