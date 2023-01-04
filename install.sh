@@ -91,6 +91,13 @@ export DATASITE_HOME=${__dir}
 ANSIBLE_PATH="$(python3 -m site --user-base)/bin"
 if [[ ! -d "${DATASITE_HOME}/ds-labs-local-setup" ]]; then
   git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
+else
+  echo "SKIP ds-labs-local-setup already cloned."
+  echo "UPDATE updating ds-labs-local-setup"
+  cd "${DATASITE_HOME}/ds-labs-local-setup"
+  git fetch --all
+  git checkout main
+  git pull
 fi
 
 cd "${DATASITE_HOME}/ds-labs-local-setup"
