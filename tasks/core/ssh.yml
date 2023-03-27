@@ -9,6 +9,16 @@
   tags:
     - install
     - ssh
+- name: Generate SSH Key
+  ansible.builtin.shell:
+    cmd: >
+      ssh-keygen -t ed25519 -C {{ ds_email }}
+      -f "{{ ansible_env.HOME }}/.ssh/id_gitlab" -q
+      -P "{{ my_ssh_passphrase }}" && eval "$(ssh-agent -s)"
+    creates: "{{ ansible_env.HOME }}/.ssh/id_gitlab"
+  tags:
+    - install
+    - ssh
 - name: Copy SSH Config
   ansible.builtin.file:
     src: "./files/.ssh/config"
@@ -18,11 +28,19 @@
   tags:
     - install
     - ssh
-- name: Set authorized key taken from file
+- name: Set authorized key taken from file for github
   ansible.posix.authorized_key:
     user: "{{ ansible_env.USER }}"
     state: present
     key: "{{ lookup('file', \"{{ ansible_env.HOME }}/.ssh/id_ed25519.pub\") }}"
+  tags:
+    - install
+    - ssh
+- name: Set authorized key taken from file for gitlab
+  ansible.posix.authorized_key:
+    user: "{{ ansible_env.USER }}"
+    state: present
+    key: "{{ lookup('file', \"{{ ansible_env.HOME }}/.ssh/id_gitlab.pub\") }}"
   tags:
     - install
     - ssh
