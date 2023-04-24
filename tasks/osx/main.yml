@@ -16,12 +16,14 @@
       - gnupg
       - grep
       - jq
-      - k9s
+      - derailed/k9s/k9s
+      - kubectl
       - openssh
       - openssl
       # update latest zsh
       - zsh
       - zsh-completions
+      - azure-cli
     state: latest
   register: updated_packages
   tags:
