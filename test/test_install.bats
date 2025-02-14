@@ -11,7 +11,10 @@ teardown() {
 }
 
 @test "run basic install" {
-    run ./install.sh <<< "${install_dir}"
+    run ./install.sh << EOF
+${install_dir}
+n
+EOF
     assert_output --partial "[INFO] ds-labs-local-setup will create ${install_dir} if it does not exist and download the repo to that directory."
     assert_output --partial "[CREATE] ${install_dir}"
     assert_output --partial "[CREATE] cloning DatasiteLabs/ds-labs-local-setup to ${install_dir}/ds-labs-local-setup"
@@ -26,7 +29,10 @@ teardown() {
 @test "handle directories already exists" {
     mkdir -p ${install_dir}/ds-labs-local-setup
     touch ${install_dir}/ds-labs-local-setup/file.txt
-    run ./install.sh <<< "${install_dir}"
+    run ./install.sh << EOF
+${install_dir}
+n
+EOF
     assert_output --partial "[INFO] ds-labs-local-setup will create ${install_dir} if it does not exist and download the repo to that directory."
     assert_output --partial "[SKIP] ${install_dir} exists."
     assert_output --partial "[SKIP] ${install_dir}/ds-labs-local-setup exists."

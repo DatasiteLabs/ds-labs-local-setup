@@ -23,13 +23,13 @@ jobs:
         # os: [macos-15, ubuntu-latest]
     steps:
     - uses: actions/checkout@v4
-      with:
-        submodules: true
     - name: Setup Bats and bats libs
       id: setup-bats
       uses: bats-core/bats-action@3.0.0
       with:
         bats-version: 1.11.1 
+        support-path: ${{ github.workspace }}/test/test_helper/bats-support
+        assert-path: ${{ github.workspace }}/test/test_helper/bats-assert
     - name: bats
       shell: bash {0} # This enables pseudo-tty
       env:
