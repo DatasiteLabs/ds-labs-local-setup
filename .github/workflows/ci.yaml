@@ -31,8 +31,8 @@ jobs:
       with:
         bats-version: 1.11.1 
     - name: bats
-      shell: bash
+      shell: bash {0} # This enables pseudo-tty
       env:
         BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         TERM: xterm
-      run: bats test
+      run: script -q /dev/null bats test # Using script command to allocate a pseudo-tty
