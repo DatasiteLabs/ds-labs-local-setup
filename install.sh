@@ -4,8 +4,6 @@ set -o pipefail
 set -o nounset
 [[ ${DEBUG:-} == true ]] && set -o xtrace
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-script_name="$(basename "${BASH_SOURCE[0]}")"
-log_file="${__dir}/logs/${script_name/%.*/.log}"
 
 data_dir="${1:-${HOME}/data}"
 
