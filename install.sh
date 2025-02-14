@@ -97,8 +97,7 @@ setup_repo () {
 
 if [[ ${CI} == false ]]; then
   prompt_for_directory 
-  
-
+  configure_os
   setup_repo
 
   echo ''
