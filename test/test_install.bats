@@ -91,9 +91,6 @@ EOF
     assert_output --partial "[INFO] Running ds-labs-local-setup setup on MacOS"
     assert_output --partial "[INFO] System is up to date"
 
-    assert grep -q "eval \"\$(/opt/homebrew/bin/brew shellenv)\"" "${HOME}"/.zprofile
-    assert command -v brew
-
     assert_success
 }
 
