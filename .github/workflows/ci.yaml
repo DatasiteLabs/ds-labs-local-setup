@@ -13,6 +13,7 @@ jobs:
           ignore_paths: >-
             test/test_helper/bats-assert
             test/test_helper/bats-support
+            test/test_helper/bats-file
 
   test:
     runs-on: ${{ matrix.os }}
@@ -30,6 +31,7 @@ jobs:
         bats-version: 1.11.1 
         support-path: ${{ github.workspace }}/test/test_helper/bats-support
         assert-path: ${{ github.workspace }}/test/test_helper/bats-assert
+        file-path: ${{ github.workspace }}/test/test_helper/bats-file
     - name: bats
       shell: bash {0} # This enables pseudo-tty
       env:
