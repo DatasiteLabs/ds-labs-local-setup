@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=https://json.schemastore.org/pre-commit-config.json
----
-repos:
-  - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v6.9.1
-    hooks:
-      - id: ansible-lint
-        files: \.(yaml|yml)$

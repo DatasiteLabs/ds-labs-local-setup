@@ -3,109 +3,89 @@ set -o errexit
 set -o pipefail
 set -o nounset
 [[ ${DEBUG:-} == true ]] && set -o xtrace
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+script_name="$(basename "${BASH_SOURCE[0]}")"
+log_file="${__dir}/logs/${script_name/%.*/.log}"
 
-__dir="$(pwd)"
+data_dir="${1:-${HOME}/data}"
 
-if ! pwd | grep -q "${HOME}"; then
-  echo "Scripts must be run from within your ${HOME} directory"
-fi
+read -r -p "Directory to install to, should be in your user HOME to avoid permission issues. Default [${data_dir}]: " input_dir
+data_dir="${input_dir:-${data_dir}}"
+echo "[INFO] ds-labs-local-setup will create ${data_dir} if it does not exist and download the repo to that directory."
 
-echo ""
-read -r -p "Running in ${__dir}, this will be your DATASITE_HOME. Press [enter] to continue."
-echo ""
+# shellcheck disable=SC2317  # Don't warn about unreachable commands in this function
+end () { [[ $? = 0 ]] && return; echo "[FAILED] Script failed, check the output."; exit 1; }
+trap end EXIT 
 
-if test ! "$(command -v brew)"; then
-  # install brew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo ""
+configure_mac () {
+  echo "[INFO] Running ds-labs-local-setup setup on MacOS"
+  update_output=$(softwareupdate --list 2>&1 | tee /dev/tty)
 
-  if test ! "$(command -v brew)"; then
-    read -r -p "Check the output of brew to make sure it was successful. Follow suggestions on adding to path and reload your terminal than re-run this script if it exits. Press [enter] to continue."
+  if echo "${update_output}" | grep -q "No new software available"; then
+      echo "[INFO] System is up to date"
+  else 
+      echo "[INFO] Updates available"
+      read -p "Would you like to install updates? (y/n) " -n 1 -r </dev/tty
+      echo
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+          echo "[INFO] Installing updates..."
+          softwareupdate --install --all --agree-to-license --no-scan
+      else
+        echo "[INFO] Skipping updates"
+      fi
   fi
 
-  echo ""
-  brew doctor
-  echo ""
-  read -r -p "Check the output of the 'brew doctor' command above. Fix any issues and re-run 'brew doctor'. Press [enter] to continue if there were no issues."
-  echo ""
+  # brew 
+  if test ! "$(command -v brew)"; then
+    echo "[INSTALL] Homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/tty
+    echo "[INSTRUCTION] Check the output above for any additional steps to complete, especially adding homebrew to your path."
+    printf "\nWhen finished, type 'cont' to continue...\n"
+    while read -r input < /dev/tty; do
+      if [[ $input == "cont" ]]; then
+        break
+      else
+        eval "$input"
+      fi
+      printf "\nEnter next command or type 'cont' to continue\n"
+    done
+    echo "[INFO] $(brew --version) installed"
+    echo "[INFO] $(xcode-select --version) installed"
+  fi
+}
+
+case "$OSTYPE" in
+    "darwin"*)
+        configure_mac
+    ;;
+    # "linux"*)
+    #     # configure_linux
+    # ;;
+    *)
+        printf '%s\n' "[ERROR] Unsupported OS detected, aborting..." >&2
+        exit 1
+    ;;
+esac
+
+if [[ -d "${data_dir}" ]]; then
+  echo "[SKIP] ${data_dir} exists."
 else
-  echo "SKIP brew already installed."
-  echo "UPDATE updating brew"
-  brew upgrade
-  brew cleanup
+  echo "[CREATE] ${data_dir}..."
+  mkdir "${data_dir}"
 fi
 
-brew --version
-
-# get latest python3 and manage with brew
-brew install python
-# update default tools
-python3 -m pip install --upgrade pip setuptools wheel
-
-if test ! "$(command -v ansible)"; then
-  #   brew install ansible
-  # recommended ansible install for mac: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip3
-  python3 -m pip install --user ansible
+if [[ -d "${data_dir}/ds-labs-local-setup" ]]; then
+  echo "[SKIP] ${data_dir}/ds-labs-local-setup exists."
 else
-  echo "SKIP ansible already installed."
-  echo "UPDATE updating ansible"
-  python3 -m pip install --user --upgrade ansible
-#   brew upgrade ansible
+  echo "[CREATE] cloning DatasiteLabs/ds-labs-local-setup to ${data_dir}/ds-labs-local-setup..."
+  # clone http to avoid perm issues
+  git clone https://github.com/DatasiteLabs/ds-labs-local-setup "${data_dir}/ds-labs-local-setup"
 fi
 
-# # validation
-# ansible --version
-
-# validate installs
-if ! xcode-select -p; then
-  echo "xcode-select tools did not complete."
-  exit 1
-else
-  echo "xcode-select tools installed."
-fi
-
-# ensure pip is available
-# python3 -m ensurepip --default-pip
-# python3 -m pip install --user --upgrade pip setuptools wheel venv
-# # upgrade pip3
-# python3 -m pip install --upgrade pip setuptools wheel
-
-#   # # deps for ansible
-# python3 -m pip install --user passlib
-# python3 -m pip install --user pexpect
-
-export SDKMAN_DIR="${HOME}/.sdkman"
-# shellcheck disable=SC1091
-[[ -s "${HOME}/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
-if test ! "$(command -v sdk)"; then
-  curl -s "https://get.sdkman.io" | bash
-  read -r -p "Check the output of sdkman to make sure it was successful. Follow suggestions than reload the terminal and re-run script to continue. Press [enter] to continue."
-else
-  echo "SKIP sdkman already installed."
-  echo "UPDATE updating sdkman"
-  sdk selfupdate
-  sdk update
-fi
-
-export DATASITE_HOME=${__dir}
-ANSIBLE_PATH="$(python3 -m site --user-base)/bin"
-if [[ ! -d "${DATASITE_HOME}/ds-labs-local-setup" ]]; then
-  git clone https://github.com/DatasiteLabs/ds-labs-local-setup.git
-else
-  echo "SKIP ds-labs-local-setup already cloned."
-  echo "UPDATE updating ds-labs-local-setup"
-  cd "${DATASITE_HOME}/ds-labs-local-setup"
-  git fetch --all
-  git checkout main
-  git pull
-fi
-
-cd "${DATASITE_HOME}/ds-labs-local-setup"
-"${ANSIBLE_PATH}/ansible-galaxy" install -r requirements.yml
-"${ANSIBLE_PATH}/ansible-playbook" -i "localhost," -c local local.yml -vvv --ask-become-pass
-# ansible-pull --url https://github.com/DatasiteLabs/ds-labs-local-setup.git --connection local -i 127.0.0.1 --directory "${DATASITE_HOME}/ds-labs-local-setup" -vvv local.yml
-
-exec -l "$SHELL"
+echo "[INSTRUCTION] Run the following commands in a new terminal to continue."
+printf "\n\tcd %s/ds-labs-local-setup" "${data_dir}"
+printf "\n\t./bootstrap.sh\n"
 
 echo ''
 exit 0
+
