@@ -14,6 +14,7 @@ teardown() {
     run ./install.sh << EOF
 ${install_dir}
 n
+cont
 EOF
     assert_output --partial "[INFO] ds-labs-local-setup will create ${install_dir} if it does not exist and download the repo to that directory."
     assert_output --partial "[CREATE] ${install_dir}"
@@ -32,6 +33,7 @@ EOF
     run ./install.sh << EOF
 ${install_dir}
 n
+cont
 EOF
     assert_output --partial "[INFO] ds-labs-local-setup will create ${install_dir} if it does not exist and download the repo to that directory."
     assert_output --partial "[SKIP] ${install_dir} exists."
