@@ -66,6 +66,8 @@ EOF
     assert_output --partial "cd ${install_dir}/new-dir/ds-labs-local-setup"
     assert_output --partial "./bootstrap.sh"
 
+    ls -la "${install_dir}/new-dir" >&3
+
     assert_file_exist "${install_dir}/new-dir/ds-labs-local-setup"
 
     assert_success
