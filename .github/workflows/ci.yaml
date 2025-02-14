@@ -37,4 +37,4 @@ jobs:
       env:
         BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         TERM: xterm
-      run: script -q /dev/null bats test # Using script command to allocate a pseudo-tty
+      run: script -q /dev/null bats --filter-tags 'ci' test # Using script command to allocate a pseudo-tty

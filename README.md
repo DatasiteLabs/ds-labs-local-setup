@@ -48,6 +48,7 @@ To run bats you will need to get the submodules.
 ```bash
 git submodule init
 git submodule update
+bats --filter-tags "local" test 
 ```
 
 ## CI
