@@ -43,14 +43,6 @@ I will likely add a Docker test image when linux support is added.
 > [!TIP]
 >Once confident on the changes it might be ideal to run locally to ensure the scripts are idempotent and work as expected.
 
-To run bats you will need to get the submodules.
-
-```bash
-git submodule init
-git submodule update
-bats --filter-tags "local" test 
-```
-
 ## CI
 
 A non-destructive way to run tests.
@@ -60,3 +52,19 @@ GitHub actions will run the tests in the `test` directory.
 - Shellcheck (https://github.com/koalaman/shellcheck)
 - bats (https://github.com/bats-core/bats-core)
 
+## Testing 
+
+Uses bats. Use the local tag to only run safe local tssts. You can run all or other tags if you are confident they are safe for your machine. See [#Running Locally](#running-locally) for more info on safer ways to test machine level chagnes.
+
+To run bats you will need to get the submodules.
+
+```bash
+git submodule init
+git submodule update
+```
+
+```bash
+bats --filter-tags "local" test 
+```
+
+Debugging with print should write to handle 3. e.g. `ls -la "${install_dir}/new-dir/ds-labs-local-setup" >&3`
