@@ -35,7 +35,9 @@ The general idea is the script checks for dependencies and installs or updates. 
 
 This repo is open source / public and is intended to provide the base machine configuration for Datasite employees. It may provide limited value to others, or serve as an example.
 
-## Running Locally
+## Updating and Testing
+
+### Testing Manually
 
 > [!WARNING]
 > Testing locally manually or with bats is at your own risk. This is intended to be a machine setup and mistakes might be a bit destructive while developing. Bats will use /tmp and create a directory for testing. Other steps may affect machine level items.
@@ -47,7 +49,7 @@ I will likely add a Docker test image when linux support is added.
 > [!TIP]
 >Once confident on the changes it might be ideal to run locally to ensure the scripts are idempotent and work as expected.
 
-## CI
+### CI
 
 A non-destructive way to run tests.
 
@@ -56,9 +58,9 @@ GitHub actions will run the tests in the `test` directory.
 - Shellcheck (https://github.com/koalaman/shellcheck)
 - bats (https://github.com/bats-core/bats-core)
 
-## Testing 
+### Testing with bats
 
-Uses bats. Use the local tag to only run safe local tssts. You can run all or other tags if you are confident they are safe for your machine. See [#Running Locally](#running-locally) for more info on safer ways to test machine level chagnes.
+Uses bats. Use the local tag to only run safe local tssts. You can run all or other tags if you are confident they are safe for your machine. See [Testing Manually](#testing-manually) for more info on safer ways to test machine level chagnes.
 
 To run bats you will need to get the submodules.
 
