@@ -43,6 +43,13 @@ I will likely add a Docker test image when linux support is added.
 > [!TIP]
 >Once confident on the changes it might be ideal to run locally to ensure the scripts are idempotent and work as expected.
 
+To run bats you will need to get the submodules.
+
+```bash
+git submodule init
+git submodule update
+```
+
 ## CI
 
 A non-destructive way to run tests.
