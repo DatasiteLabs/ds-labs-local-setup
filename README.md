@@ -34,7 +34,7 @@ This repo is open source / public and is intended to provide the base machine co
 ## Running Locally
 
 > [!WARNING]
-> Testing locally manually or with bats is at your own risk. This is intended to be a machine setup and mistakes might be a bit destructive while developing. 
+> Testing locally manually or with bats is at your own risk. This is intended to be a machine setup and mistakes might be a bit destructive while developing. Bats will use /tmp and create a directory for testing. Other steps may affect machine level items.
 
 I recommend something like [UTM](https://mac.getutm.app/) with a separate image to test MacOS or a Docker image for linux to run the tests locally without modifying your local machine.
 
