@@ -8,7 +8,7 @@ General tools and/or setup scripts. This is a very base-level setup.
 
 *nix would be relatively easy to add support for if desired.
 
-## Installing
+## Usage
 
 I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing it.
 
@@ -16,7 +16,8 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
 ```
 
-**NOTE**: during development of this script you may want to replace HEAD with the branch name to avoid caching/delays in updates. Opening a fresh terminal tab also helps.
+> [!NOTE]
+> During development of this script you may want to replace HEAD with the branch name to avoid caching/delays in updates. Opening a fresh terminal tab also helps.
 
 ### What the install script does
 
@@ -26,6 +27,9 @@ The general idea is the script checks for dependencies and installs or updates. 
 1. Checks the OS software update for updates and prompts you to install them.
 1. Checks for the package manager and installs it if it is not found. It will pause so you can execute any commands instructed by the package manager. Once complete you can type 'cont' to continue.
 1. Output the next steps to continue installing from the newly downloaded repository.
+
+> [!NOTE]
+> Follow the instructions in the output to continue from within the downloaded repository.
 
 ## Background Information
 
