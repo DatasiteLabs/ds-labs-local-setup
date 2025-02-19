@@ -1,0 +1,10 @@
+# tools essential to engineering
+# Update latest bash and add completions
+- bash
+- bash-completion@2
+# update latest git
+- git
+- jq
+# update latest zsh and add completions
+- zsh
+- zsh-completions

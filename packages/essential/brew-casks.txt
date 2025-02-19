@@ -1,0 +1,6 @@
+# brew casks essential to engineering
+- 1password
+- 1password-cli
+# update to latest version
+- google-chrome
+- slack
