@@ -29,7 +29,9 @@ update_brew() {
 install_brew_packages() {
   echo "[INSTALL] Installing homebrew packages."
   
-  mapfile -t formulas < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # bash 3 compatibility
+  IFS=$'\n' read -d '' -r -a formulas < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # mapfile -t formulas < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
 
   for formula in "${formulas[@]}"; do
     if ! brew list --formula --versions "${formula}"; then
@@ -43,7 +45,9 @@ install_brew_casks() {
   declare -a skipped_casks=()
   echo "[INSTALL] Installing homebrew casks."
 
-  mapfile -t casks < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # bash 3 compatibility
+  IFS=$'\n' read -d '' -r -a casks < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # mapfile -t casks < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
 
   for cask in "${casks[@]}"; do
     if ! brew list --cask --versions "${cask}"; then
