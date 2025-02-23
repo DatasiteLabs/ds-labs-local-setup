@@ -23,7 +23,7 @@ teardown() {
 
 # bats test_tags=local,ci
 @test "filter_opts should show help with -h" { 
-  run  filter_opts filters -h
+  run  filter_opts -h
 
   assert_output --partial "usage: [DEBUG=true] ${0} [-h|--help] [--filter package]"
   assert_success
@@ -31,7 +31,7 @@ teardown() {
 
 # bats test_tags=local,ci
 @test "filter_opts should show help with --help" { 
-  run filter_opts filters --help
+  run filter_opts --help
 
   assert_output --partial "usage: [DEBUG=true] ${0} [-h|--help] [--filter package]"
   assert_success
@@ -39,44 +39,46 @@ teardown() {
 
 # bats test_tags=local,ci
 @test "filter_opts should show help and error with unknown option" { 
-  run filter_opts filters --yo
+  run filter_opts --yo
 
   assert_output --partial "usage: [DEBUG=true] ${0} [-h|--help] [--filter package]"
   assert_failure
 }
 
-# bats test_tags=local,ci
-@test "filter_opts should require a filters variable" { 
-  run filter_opts
+# # bats test_tags=local,ci
+# @test "filter_opts should require a filters variable" { 
+#   run filter_opts
 
-  assert_output --partial "[ERROR] the first argument is required to be an array to store filters"
-  assert_failure
-}
+#   assert_output --partial "[ERROR] the first argument is required to be an array to store filters"
+#   assert_failure
+# }
 
 # bats test_tags=local,ci
 @test "filter_opts should handle no filters" { 
-  filter_opts filters
+  # shellcheck disable=SC2030
+  filters=()
+  filter_opts
 
   assert [ ${#filters[@]} -eq 0 ]
 }
 
 # bats test_tags=local,ci
 @test "filter_opts should handle single filter" { 
-  filter_opts filters --filter essential
+  filter_opts --filter essential
 
   assert [ "${filters[*]}" = 'essential' ]
 }
 
 # bats test_tags=local,ci
 @test "filter_opts should handle multiple filters" { 
-  filter_opts filters --filter essential --filter recommended
+  filter_opts --filter essential --filter recommended
 
   assert [ "${filters[*]}" = 'essential recommended' ]
 }
 
 # bats test_tags=local,ci
 @test "filter_opts should handle invalid filters" { 
-  filter_opts filters --filter essential --filter yo
+  filter_opts  --filter essential --filter yo
 
   assert [ "${filters[*]}" = 'essential' ]
 }

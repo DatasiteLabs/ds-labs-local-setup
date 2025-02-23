@@ -6,6 +6,7 @@ set -o nounset
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CI=${CI:-false}
 
+# global because bash 3 doesn't support local -n and mac defaults to bash 3 
 declare -a filters
 
 if [[ ${CI} == false ]]; then
@@ -32,17 +33,16 @@ END
 }
 
 filter_opts() {
-  [[ ${1:-} ]] || (echo -e "[ERROR] the first argument is required to be an array to store filters. e.g. \n\tdeclare -a filters\n\tfilter_opts filters"; exit 1;)
-  local -n local_filters=$1
-  shift
-  local_filters=()
-
   while getopts ":h-:" opt; do
       case "${opt}" in
           -)
               case "${OPTARG}" in
                   filter)
-                    local_filters+=("${!OPTIND}")
+                    if find "${__dir}/packages" -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | grep -q "^${!OPTIND}$"; then
+                      filters+=("${!OPTIND}")
+                    else
+                      echo "[WARN] Removing invalid filter: ${!OPTIND}"
+                    fi
                     OPTIND=$(( OPTIND + 1 ))
                     ;;
                   help)
@@ -67,20 +67,6 @@ filter_opts() {
               ;;
       esac
   done
-  shift $((OPTIND -1))
-
-  if (( ${#local_filters[@]} > 0 )); then
-    valid_filters=$(find "${__dir}/packages" -maxdepth 1 -mindepth 1 -type d -exec basename {} \;)
-    filtered=()
-    for filter in "${local_filters[@]}"; do
-      if echo "$valid_filters" | grep -q "^${filter}$"; then
-        filtered+=("$filter")
-      else
-        echo "[WARN] Removing invalid filter: ${filter}"
-      fi
-    done
-    local_filters=("${filtered[@]}")
-  fi
 }
 
 run_essential() {
@@ -121,7 +107,7 @@ main() {
 }
 
 if [[ ${CI} == false ]]; then
-  filter_opts filters "$@"
+  filter_opts "$@"
 
   main
 
