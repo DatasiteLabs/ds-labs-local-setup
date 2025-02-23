@@ -77,18 +77,24 @@ run_essential() {
 
 main() {
   echo "[CONFIG] Configuring macOS"
+  declare -a filtered=()
 
   # remove essential from filters if it exists
-  filtered=("${filters[@]}")
+  if (( ${#filters[@]} > 0 )); then # bash < 4.3
+    filtered=("${filters[@]}")
+  fi
   filters=()
-  for filter in "${filtered[@]}"; do
-    if [[ "${filter}" != "essential" ]]; then
-      filters+=("${filter}")
-    else
-      # run essential first and regardless since other things could depend on it
-      run_essential
-    fi
-  done
+
+  if (( ${#filtered[@]} > 0 )); then # bash < 4.3
+    for filter in "${filtered[@]}"; do
+      if [[ "${filter}" != "essential" ]]; then
+        filters+=("${filter}")
+      else
+        # run essential first and regardless since other things could depend on it
+        run_essential
+      fi
+    done
+  fi
 
   if (( ${#filters[@]} > 0 )); then
     echo "[RUN] additional filters=(${filters[*]})"
