@@ -7,7 +7,7 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CI=${CI:-false}
 
 # global because bash 3 doesn't support local -n and mac defaults to bash 3 
-declare -a filters
+declare -a filters=()
 
 if [[ ${CI} == false ]]; then
   # shellcheck disable=SC2317  # Don't warn about unreachable commands in this function
