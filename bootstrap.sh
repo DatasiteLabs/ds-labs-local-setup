@@ -115,7 +115,7 @@ main() {
   else
     run_essential
     awk '/^==> Caveats/{print "\n-----\n";p=1;next} /^==>/{p=0} p' "${log_file}" > "${brew_caveats_log}"
-    echo "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete."
+    echo "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
     echo "[INSTRUCTION] To run additional filters, run the script again with --filter <package>. Use -h for a list of available packages to filter on."
   fi
 
