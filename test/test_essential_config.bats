@@ -27,6 +27,8 @@ teardown() {
 @test "update_shells should add brew managed shells for brew" { 
   BREW_PREFIX=$(brew --prefix)
 
+  cat /etc/shells >&3
+
   run update_shells
 
   check_bash=$(! grep -F --quiet "${BREW_PREFIX}/bin/bash" /etc/shells)
