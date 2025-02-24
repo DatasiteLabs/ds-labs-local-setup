@@ -6,6 +6,17 @@ setup() {
     _common_setup
     # shellcheck disable=SC1091
     source "${PROJECT_ROOT}/packages/essential/config.sh"
+
+    # shellcheck disable=SC2317
+    brew() {
+      command=${1:-}
+      echo "brew $*"
+      if [[ ${command} == "--prefix" ]]; then
+        echo '/opt/homebrew'
+      fi
+    }
+
+    export -f brew
 }
 
 teardown() {
