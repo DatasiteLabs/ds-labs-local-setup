@@ -8,7 +8,9 @@ CI=${CI:-false}
 log_file="${__dir}/logs/install.log"
 brew_caveats_log="${__dir}/logs/brew_caveats.log"
 
-exec 3>&2 > >(tee "${log_file}") 2>&1
+if [[ -z "${BATS_TEST_FILENAME:-}" ]]; then
+  exec 3>&2 > >(tee "${log_file}") 2>&1
+fi
 
 # global because bash 3 doesn't support local -n and mac defaults to bash 3 
 declare -a filters=()
