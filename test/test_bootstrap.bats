@@ -6,6 +6,15 @@ setup() {
     _common_setup
     # shellcheck disable=SC1091
     source "${PROJECT_ROOT}/bootstrap.sh"
+
+    # prevent overwrite local logs
+    export log_file="${PROJECT_ROOT}/test/test_helper/install.log"
+    export brew_caveats_log="${PROJECT_ROOT}/test/test_helper/brew_caveats.log"
+
+    if [[ -f "${brew_caveats_log}" ]]; then
+      rm "${brew_caveats_log}"
+    fi
+    touch "${log_file}"
     
     brew() {
       # shellcheck disable=SC2317
@@ -95,10 +104,10 @@ teardown() {
   run main
 
   assert_output --partial "[CONFIG] Configuring macOS"
-  refute_output --partial "[RUN] filters="
   assert_output --partial "[RUN] filter=essential"
   assert_output --partial "find ${PROJECT_ROOT}/packages/essential -type file -name config.sh -exec bash {} ;"
   assert_output --partial "[INSTRUCTION] To run additional filters, run the script again with --filter <package>. Use -h for a list of available packages to filter on."
+  assert_output --partial "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
   assert_success
 }
 
@@ -118,6 +127,7 @@ teardown() {
   assert_output --partial "[RUN] filter=recommended"
   assert_output --partial "find ${PROJECT_ROOT}/packages/essential -type file -name config.sh -exec bash {} ;"
   assert_output --partial "find ${PROJECT_ROOT}/packages/recommended -type file -name config.sh -exec bash {} ;"
+  assert_output --partial "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
   assert_success
 }
 
@@ -136,5 +146,27 @@ teardown() {
   assert_output --partial "[RUN] additional filters=(recommended)"
   assert_output --partial "[RUN] filter=recommended"
   assert_output --partial "find ${PROJECT_ROOT}/packages/recommended -type file -name config.sh -exec bash {} ;"
+  assert_output --partial "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
   assert_success
+}
+
+# bats test_tags=local,ci
+@test "main should extract caveats to logfile" { 
+  export log_file="${PROJECT_ROOT}/test/test_helper/sample_install.log"
+
+  brew() {
+    echo "brew $*"
+  }
+
+  filters=()
+
+  run main
+
+  assert_output --partial "[CONFIG] Configuring macOS"
+  assert_output --partial "[RUN] filter=essential"
+  assert_output --partial "[INSTRUCTION] To run additional filters, run the script again with --filter <package>. Use -h for a list of available packages to filter on."
+  assert_output --partial "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
+  assert_success
+  
+  assert grep -q "Add the following line to your ~/.bash_profile" "${brew_caveats_log}"
 }

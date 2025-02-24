@@ -12,6 +12,8 @@ if [[ -z "${BATS_TEST_FILENAME:-}" ]]; then
   exec 3>&2 > >(tee "${log_file}") 2>&1
 fi
 
+date
+
 # global because bash 3 doesn't support local -n and mac defaults to bash 3 
 declare -a filters=()
 
@@ -79,9 +81,6 @@ run_essential() {
   echo "[RUN] filter=essential"
   bash "${__dir}/packages/install.sh"
   find "${__dir}/packages/essential" -type file -name "config.sh" -exec bash {} \;
-  if [[ -z "${BATS_TEST_FILENAME:-}" ]]; then
-    exec "$SHELL"
-  fi
 }
 
 main() {
@@ -117,17 +116,27 @@ main() {
   else
     run_essential
     echo "[INSTRUCTION] To run additional filters, run the script again with --filter <package>. Use -h for a list of available packages to filter on."
+    echo "[INSTRUCTION] For best results after running the first time, start in a clean tab/window. This allows scripts to use the newer bash."
   fi
 
-  awk '/^==> Caveats/{print "\n-----\n";p=1;next} /^==>/{p=0} p' "${log_file}" > "${brew_caveats_log}"
-  echo "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file}"
+  {
+    echo ''
+    date
+    awk '/^==> Caveats/{print "\n-----\n";p=1;next} /^==>/{p=0} p' "${log_file}"
+    echo '-----'
+    echo ''
+  } >> "${brew_caveats_log}"
+
+  echo "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete. The full log is at ${log_file} and will be replaced on the next run."
 }
 
 if [[ ${CI} == false ]]; then
   filter_opts "$@"
 
   main
-
+  
   echo ''
-  exit 0
 fi
+
+echo '-----'
+echo ''
