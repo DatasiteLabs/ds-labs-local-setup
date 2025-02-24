@@ -29,8 +29,8 @@ teardown() {
 
   run update_shells
 
-  check_bash=$(! grep -F --quiet "${BREW_PREFIX}/bin/bash" /etc/shells; echo $?)
-  check_zsh=$(! grep -F --quiet "${BREW_PREFIX}/bin/zsh" /etc/shells; echo $?)
+  check_bash=$(grep -F --quiet "${BREW_PREFIX}/bin/bash" /etc/shells; echo $?)
+  check_zsh=$(grep -F --quiet "${BREW_PREFIX}/bin/zsh" /etc/shells; echo $?)
 
   assert_equal "${check_bash}" 0
   assert_equal "${check_zsh}" 0
