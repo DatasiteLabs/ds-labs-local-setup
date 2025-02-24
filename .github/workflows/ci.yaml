@@ -34,6 +34,7 @@ jobs:
         file-path: ${{ github.workspace }}/test/test_helper/bats-file
     - name: bats
       shell: bash {0} # This enables pseudo-tty
+      timeout-minutes: 5
       env:
         BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         TERM: xterm
