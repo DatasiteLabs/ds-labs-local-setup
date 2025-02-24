@@ -34,6 +34,10 @@ teardown() {
 
   check_bash=$(! grep -F --quiet "${BREW_PREFIX}/bin/bash" /etc/shells)
   check_zsh=$(! grep -F --quiet "${BREW_PREFIX}/bin/zsh" /etc/shells)
+  
+  "${check_bash}" >&3
+  cat /etc/shells >&3
+
   assert_equal "${check_bash}" 0
   assert_equal "${check_zsh}" 0
   assert_success
