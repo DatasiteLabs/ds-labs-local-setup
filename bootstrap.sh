@@ -5,6 +5,10 @@ set -o nounset
 [[ ${DEBUG:-} == true ]] && set -o xtrace
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CI=${CI:-false}
+log_file="${__dir}/logs/install.log"
+brew_caveats_log="${__dir}/logs/brew_caveats.log"
+
+exec 3>&2 > >(tee "${log_file}") 2>&1
 
 # global because bash 3 doesn't support local -n and mac defaults to bash 3 
 declare -a filters=()
@@ -73,6 +77,9 @@ run_essential() {
   echo "[RUN] filter=essential"
   bash "${__dir}/packages/install.sh"
   find "${__dir}/packages/essential" -type file -name "config.sh" -exec bash {} \;
+  if [[ -z "${BATS_TEST_FILENAME}" ]]; then
+    exec "$SHELL"
+  fi
 }
 
 main() {
@@ -107,6 +114,8 @@ main() {
     done 
   else
     run_essential
+    awk '/^==> Caveats/{print "\n-----\n";p=1;next} /^==>/{p=0} p' "${log_file}" > "${brew_caveats_log}"
+    echo "[INSTRUCTION] Check the output above or in ${brew_caveats_log} for any additional steps you can complete."
     echo "[INSTRUCTION] To run additional filters, run the script again with --filter <package>. Use -h for a list of available packages to filter on."
   fi
 
