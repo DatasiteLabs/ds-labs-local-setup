@@ -77,7 +77,7 @@ run_essential() {
   echo "[RUN] filter=essential"
   bash "${__dir}/packages/install.sh"
   find "${__dir}/packages/essential" -type file -name "config.sh" -exec bash {} \;
-  if [[ -z "${BATS_TEST_FILENAME}" ]]; then
+  if [[ -z "${BATS_TEST_FILENAME:-}" ]]; then
     exec "$SHELL"
   fi
 }
