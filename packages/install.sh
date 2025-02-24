@@ -29,8 +29,12 @@ update_brew() {
 install_brew_packages() {
   echo "[INSTALL] Installing homebrew packages."
   
+  declare -a formulas=()
   # bash 3 compatibility, bash 4 has mapfile
-  readarray -t formulas < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # mapfile -t formulas < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  while IFS= read -r line; do
+    formulas+=("${line}")
+  done < <(grep '^- ' "${__dir}/${filter}/brew.txt" | sed 's/^- //;s/[[:space:]]*$//')
 
   for formula in "${formulas[@]}"; do
     if ! brew list --formula --versions "${formula}"; then
@@ -44,8 +48,12 @@ install_brew_casks() {
   declare -a skipped_casks=()
   echo "[INSTALL] Installing homebrew casks."
 
+  declare -a casks=()
   # bash 3 compatibility, bash 4 has mapfile
-  readarray -t casks < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  # mapfile -t casks < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
+  while IFS= read -r line; do
+    casks+=("${line}")
+  done < <(grep '^- ' "${__dir}/${filter}/brew-casks.txt" | sed 's/^- //;s/[[:space:]]*$//')
 
   for cask in "${casks[@]}"; do
     if ! brew list --cask --versions "${cask}"; then
