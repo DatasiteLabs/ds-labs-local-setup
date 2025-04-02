@@ -10,7 +10,7 @@ General tools and/or setup scripts. This is a very base-level setup.
 
 ## Usage
 
-I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing it.
+I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh) in your browser before executing it. See [What the Install Script Does](#What-the-install-script-does) for a detailed description.
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/DatasiteLabs/ds-labs-local-setup/HEAD/install.sh)"
@@ -19,7 +19,7 @@ I encourage you to view [the script](https://raw.githubusercontent.com/DatasiteL
 > [!NOTE]
 > During development of this script you may want to replace HEAD with the branch name to avoid caching/delays in updates. Opening a fresh terminal tab also helps.
 
-### What the install script does
+### What the Install Script Does
 
 The general idea is the script checks for dependencies and installs or updates. The script is idempotent, so you can run it multiple times. It will check to see if directories exist and skip steps as needed. 
 
@@ -29,11 +29,11 @@ The general idea is the script checks for dependencies and installs or updates. 
 1. Output the next steps to continue installing from the newly downloaded repository.
 
 > [!NOTE]
-> Follow the instructions in the output to continue from within the downloaded repository.
+> Follow the instructions in the output to continue from within the downloaded repository. The next steps will be the bootstrap script. See [What the Bootstrap Script Does](#What-the-bootstrap-script-does) for more details.
 
-### What the bootstrap script does
+### What the Bootstrap Script Does
 
-The install script will prompt you to run [./bootstrap.sh](./bootstrap.sh) at the end. This script is idempotent and meant to be run whenver you want to update the scripts from the directory the repository is installed. 
+The install script will prompt you to run [./bootstrap.sh](./bootstrap.sh) at the end. This script is idempotent and meant to be run whenver you want to update the scripts from the directory the repository is installed. This first run only installs the essential package and other things may depend on it. Running this first before other packages is a good idea.
 
 The biggest piece of this is the ability to run a 'filter', which is a package name to apply. This allows us to have users contribute a 'package' such as recommended, python, java, kotlin, etc. which are the things engineers using those languages need. 
 
@@ -41,7 +41,7 @@ The biggest piece of this is the ability to run a 'filter', which is a package n
 
 The essential package is the bare minimum all engineering needs.
 
-Multiple filters can be provided. e.g. `./bootstrap.sh --filter essential --filter recommended`
+Multiple filters can be provided. e.g. `./bootstrap.sh --filter recommended --filter vscode`
 
 - For each package the install script is called with that filter applied.
 - After that the config.sh for each package is called if provided.
@@ -97,6 +97,9 @@ package_name=my_new_package
 package_manager=brew
 mkdir packages/${package_name}
 touch packages/${package_name}/${package_manager}.txt
+
+# if you need casks
+touch packages/${package_name}/brew-cask.txt 
 ```
 
 Optional steps
